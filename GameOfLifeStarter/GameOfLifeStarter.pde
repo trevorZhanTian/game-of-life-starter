@@ -7,6 +7,7 @@ void setup() {
   noStroke(); // don't draw the edges of each cell
   frameRate(10); // controls speed of regeneration
   grid = new int[height / SPACING][width / SPACING];
+  for ()
 
   // populate initial grid
   // your code here
@@ -36,6 +37,7 @@ int countNeighbors(int y, int x) {
 }
 
 void showGrid() {
+  for (int )
   // your code here
   // use square() to represent each cell
   // use fill(r, g, b) to control color: black for empty, red for filled (or alive)
