@@ -5,6 +5,7 @@ int rows;
 int columns;
 int[][] grid; // the 2D array to hold 0's and 1's
 boolean isPaused = false;
+boolean restart = false;
 
 void setup() {
   background(0);
@@ -12,9 +13,11 @@ void setup() {
   //size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
   noStroke(); // don't draw the edges of each cell
   frameRate(2); // controls speed of regeneration
+  initializeGrid();
+}
+
+void initializeGrid() {
   grid = new int[height / SPACING + 2][width / SPACING + 2];
-  // populate initial grid
-  // your code here
   rows = height / SPACING;
   columns = width / SPACING;
   for (int row = 1; row <= rows; row++) {
@@ -32,13 +35,23 @@ void draw() {
   if (!isPaused) {
     grid = calcNextGrid();
   }
+  if (restart) {
+    initializeGrid(); 
+    restart = false;
+  }
+  fill(255);
+  textSize(20);
+  text("Press Space to pause, 1 to restart", width - 280, height-10);
 }
 
 void keyPressed() {
   if (key == ' ') {
     isPaused = !isPaused;
   } 
-}
+  if (key == '1') {
+    restart = true;
+  } 
+ }
 
 
 void mousePressed() {
