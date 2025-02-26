@@ -4,10 +4,12 @@ final float DENSITY = 0.1; // how likely each cell is to be alive at the start
 int rows;
 int columns;
 int[][] grid; // the 2D array to hold 0's and 1's
+boolean isPaused = false;
 
 void setup() {
   background(0);
-  size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
+  fullScreen();
+  //size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
   noStroke(); // don't draw the edges of each cell
   frameRate(2); // controls speed of regeneration
   grid = new int[height / SPACING + 2][width / SPACING + 2];
@@ -27,14 +29,26 @@ void setup() {
 
 void draw() {
   showGrid();
-  grid = calcNextGrid();
+  if (!isPaused) {
+    grid = calcNextGrid();
+  }
+}
+
+void keyPressed() {
+  if (key == ' ') {
+    isPaused = !isPaused;
+  } 
 }
 
 
 void mousePressed() {
   int row = mouseY / SPACING + 1;
   int column = mouseX / SPACING + 1;
-  grid[row][column] = 1;
+  if (grid[row][column] == 0) {
+    grid[row][column] = 1;
+  } else {
+    grid[row][column] = 0;
+  }
   showGrid();
 }
 
@@ -90,7 +104,7 @@ void showGrid() {
       if (grid[row][column] == 0) {
         fill(0);
       } else {
-        fill(max(0, 255 - grid[row][column] * 5));
+        fill(min(grid[row][column] * 10, 255), 255, 0);
         //print(grid[row][column]); 
       }
       square(posX,posY,SPACING);
